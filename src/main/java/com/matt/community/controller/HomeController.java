@@ -34,15 +34,15 @@ public class HomeController {
 
         List<DiscussPost> discussPosts =  discussPostService.findDiscussPosts(0, page.getLimit(), page.getOffset());
         List<Map<String,Object>> maps = new ArrayList<>();
-        Map<String, Object> map;
-        User user;
 
-        for (DiscussPost discussPost : discussPosts) {
-            map = new HashMap<>();
-            map.put("post", discussPost);
-            user = userService.findUserById(discussPost.getUserId());
-            map.put("user", user);
-            maps.add(map);
+        if(discussPosts != null) {
+            for(DiscussPost discussPost : discussPosts) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("post", discussPost);
+                User user = userService.findUserById(discussPost.getUserId());
+                map.put("user", user);
+                maps.add(map);
+            }
         }
 
         model.addAttribute("discussPosts", maps);
