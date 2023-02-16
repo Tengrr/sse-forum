@@ -14,4 +14,10 @@ public interface DiscussPostMapper {
 
     //查询帖子总行数，用于分页时计算页数
     int selectDiscussPostRows(@Param("userId") int userId);
+
+    int insertDiscussPost (DiscussPost discussPost);
+
+    DiscussPost selectDiscussPostById(int id);
+
+    int updateCommentCount(int id, int commentCount);
 }
