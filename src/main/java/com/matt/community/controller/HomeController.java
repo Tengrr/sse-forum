@@ -4,7 +4,9 @@ import com.matt.community.entity.DiscussPost;
 import com.matt.community.entity.Page;
 import com.matt.community.entity.User;
 import com.matt.community.service.DiscussPostService;
+import com.matt.community.service.LikeService;
 import com.matt.community.service.UserService;
+import com.matt.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,16 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant {
 
     @Autowired
     private DiscussPostService discussPostService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     //将前十个帖子信息与对应的用户信息封装至List<Map>中
@@ -41,6 +46,10 @@ public class HomeController {
                 map.put("post", discussPost);
                 User user = userService.findUserById(discussPost.getUserId());
                 map.put("user", user);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, discussPost.getId());
+                map.put("likeCount", likeCount);
+
                 maps.add(map);
             }
         }
