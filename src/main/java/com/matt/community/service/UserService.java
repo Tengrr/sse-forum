@@ -66,24 +66,29 @@ public class UserService implements CommunityConstant {
         }
         if(StringUtils.isBlank(user.getUsername())) {
             map.put("usernameMsg", "账号不能为空！");
+            return map;
         }
         if(StringUtils.isBlank(user.getPassword())) {
             map.put("passwordMsg", "密码不能为空！");
+            return map;
         }
         if(StringUtils.isBlank(user.getEmail())) {
             map.put("emailMsg", "邮箱不能为空！");
+            return map;
         }
 
         // 验证账号是否已存在
         User u = userMapper.selectByName(user.getUsername());
         if(u != null) {
             map.put("usernameMsg", "该账号已存在！");
+            return map;
         }
 
         // 验证邮箱
         u = userMapper.selectByEmail(user.getEmail());
         if(u != null) {
             map.put("emailMsg", "该邮箱已被注册");
+            return map;
         }
 
         // 注册用户,将用户信息存入数据库

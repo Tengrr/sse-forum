@@ -37,6 +37,7 @@ public class HomeController implements CommunityConstant {
         page.setRows(discussPostService.findDiscussPostRows(0));
         page.setPath("/index");
 
+        // 默认limit = 10，current = 1
         List<DiscussPost> discussPosts =  discussPostService.findDiscussPosts(0, page.getLimit(), page.getOffset());
         List<Map<String,Object>> maps = new ArrayList<>();
 
